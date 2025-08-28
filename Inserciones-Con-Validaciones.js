@@ -40,3 +40,44 @@ db.createCollection("Clientes", {
         }
     }
 })
+
+
+
+db.createCollection("Ingredientes", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: [
+                "_id",
+                "nombre",
+                "stock",
+                "unidad"
+            ],
+            properties: {
+                _id:{
+                    bsonType: "ObjectId",
+                    description: "Identificador unico  generado por Mongo"
+                },
+                nombre: {
+                    bsonType: "string",
+                    minLength: 3,
+                    pattern: "^[A-Z]",
+                    description: "El nombre debe empezar con mayuscula"
+                },
+                stock: {
+                    bsonType: "int",
+                    minimum: 0,
+                    pattern: "^[1-9]\d*$",
+                    description: "El stock no puede ser negativo"
+                },
+                unidad: {
+                    bsonType: "string",
+                    minLength: 2,
+                    enum: ["g", "ml", "unidades"],
+                    description: "La unidad debe ser g, ml o unidades"                }
+            }
+        }
+    }
+})
+
+
